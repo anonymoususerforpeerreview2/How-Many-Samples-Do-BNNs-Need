@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aistats-experiments"
+version = "0.1.0"
+description = "Experiments for adaptive BNN inference"
+requires-python = ">=3.10"
+license = "GPL-3.0-or-later"
+license-files = ["LICENSE"]
+dependencies = [
+    "adaptive-cs==0.1.0",
+    "numpy>=1.24,<2",
+    "omegaconf>=2.3",
+    "torch>=2.1,<2.2",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[tool.setuptools]
+py-modules = ["non_vectorized_class_selection"]
+
+[tool.setuptools.packages.find]
+include = ["bnn_demo_lib*", "experiments*"]
+namespaces = false
+
+[tool.setuptools.package-data]
+"experiments.toy" = ["config.yaml"]

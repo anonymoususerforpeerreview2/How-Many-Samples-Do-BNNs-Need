@@ -1,0 +1,56 @@
+dataset:
+  num_inputs: 500
+  num_classes: 3
+  # Cohorts span high, intermediate, and low maximum confidences.  The final
+  # cohort is a two-mode posterior predictive, not merely a low-kappa draw.
+  cohorts:
+    - name: confident_stable
+      fraction: 0.25
+      kind: independent_remainder
+      hard: false
+      top_probability: [0.78, 0.92]
+      kappa: [100.0, 300.0]
+    - name: threshold_boundary
+      fraction: 0.25
+      kind: independent_remainder
+      hard: false
+      # Means tightly bracket the q=.7 decision boundary, with a wide spread
+      # of draw variances so a finite Monte Carlo average can cross either way.
+      top_probability: [0.66, 0.74]
+      kappa: [5.0, 100.0]
+    - name: diffuse_near_tie
+      fraction: 0.25
+      kind: near_tie
+      hard: true
+      top_probability: [0.42, 0.54]
+      leader_margin: [0.01, 0.12]
+      kappa: [8.0, 50.0]
+    - name: multimodal_disagreement
+      fraction: 0.25
+      kind: two_peak
+      hard: true
+      top_probability: [0.54, 0.68]
+      tail_probability: [0.08, 0.12]
+      mode_shift: [0.17, 0.21]
+      kappa: [80.0, 180.0]
+
+confidence:
+  alpha: 0.05
+  c: 0.75
+  theta: 0.5
+  endpoint_root_mode: componentwise
+  root_finder: boost
+  bisection_x_tolerance: 1.0e-4
+  bisection_y_tolerance: 1.0e-6
+  max_bisection_steps: 80
+  padding: 1.0e-12
+  simplex_intersection: true
+
+experiment:
+  seed: 0
+  max_samples: 400
+  fixed_budgets: [20, 50, 100, 200, 400]
+  distribution_epsilon: 0.05
+  probability_threshold: 0.7
+  early_abstention: true
+  predictive_samples: 1000

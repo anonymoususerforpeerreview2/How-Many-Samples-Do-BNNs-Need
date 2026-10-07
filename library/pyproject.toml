@@ -1,0 +1,21 @@
+[build-system]
+requires = ["scikit-build-core>=0.11,<2"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "adaptive-cs"
+version = "0.1.0"
+description = "Adaptive confidence sequence trackers"
+requires-python = ">=3.10"
+license = "GPL-3.0-or-later"
+license-files = ["LICENSE"]
+dependencies = [
+    "numpy>=1.24,<2",
+    "torch>=2.1,<2.2",
+]
+
+[tool.scikit-build]
+cmake.source-dir = "adaptive_cs"
+wheel.packages = ["adaptive_cs"]
+wheel.py-api = "py3"
+wheel.exclude = ["adaptive_cs/native/**", "adaptive_cs/CMakeLists.txt", "adaptive_cs/build/**"]
